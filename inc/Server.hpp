@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/18 18:52:25 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/18 20:21:48 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "Client.hpp"
 #include "Channel.hpp"
 #include "CommandHandler.hpp"
+#include <poll.h>
 #include <vector>
 #include <map>
 
@@ -42,6 +43,8 @@ class Server
         void    creatChannel(const std::string& name, Client* creator);
         void    removeChannelIfEmpt(const std::string& name);
         void    disconnectClient(int fd);
+
+        static void signalHandler(int signum);
      
     private:
 
@@ -62,7 +65,6 @@ class Server
         void handleClientRead(int fd);
         void handleClientWrite(int fd);
 
-        static void signalHandler(int signum);
 };
 
 #endif
