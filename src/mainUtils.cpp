@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 20:12:02 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/19 13:16:07 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/19 19:08:46 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool    checkArgs(char **av)
 
 void    signalInit(struct sigaction *sa)
 {
-    std::memset(sa, 0, sizeof(sa));
+    std::memset(sa, 0, sizeof(*sa));
     sigemptyset(&sa->sa_mask);
     sa->sa_flags = 0;
 
