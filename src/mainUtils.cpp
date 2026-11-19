@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 20:12:02 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/18 20:19:20 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/19 13:16:07 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ void    signalInit(struct sigaction *sa)
     sigaction(SIGPIPE, sa, NULL);
 
     // 2. Attraper SIGINT et SIGQUIT
-    sa->sa_handler = Server::signalHandler;
+    sa->sa_handler = signalHandler;
     sigaction(SIGINT, sa, NULL);
     sigaction(SIGQUIT, sa, NULL);
 }
 
+void signalHandler(int signum)
+{
+    (void)signum;
+}

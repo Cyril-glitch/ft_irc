@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 19:04:44 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/18 20:25:35 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/19 13:23:07 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,4 @@ int main(int ac, char **av)
 
     struct sigaction sa;
     signalInit(&sa);
-
-    
 }
