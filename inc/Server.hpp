@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/19 20:28:08 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/24 20:46:01 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 #include <map>
 #include <unistd.h>
 
+#include <errno.h>
+
 class Server
 {
     public:
@@ -42,10 +44,10 @@ class Server
         void init();
         void run();
 
-        std::string getPassword() const;
-        std::string getClientByFd(int fd);
-        std::string getClientByNickName(const std::string &nickname);
-        std::string getChannel(const std::string& name);
+        std::string getClientPassword(Client &client) const;
+        Client* getClientByFd(int fd);
+        Client* getClientByNickName(const std::string &nickname);
+        Channel* getChannel(const std::string& name);
 
         void    creatChannel(const std::string& name, Client* creator);
         void    removeChannelIfEmpt(const std::string& name);
@@ -69,8 +71,8 @@ class Server
         Server& operator=(const Server &rhs);
 
         void acceptNewClient();
-        void handleClientRead(int fd);
-        void handleClientWrite(int fd);
+        void receiveFromClient(int fd, Client *client);
+        void SendToClient(int fd);
 
         void closeClientsMap();
         void closeChannelsMap();
@@ -79,6 +81,8 @@ class Server
         void createSocket();
         void setSocket();
         void bindSocket();
+
+        void setPollEvents();
 };
 
 #endif

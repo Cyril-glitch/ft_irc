@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/18 17:32:35 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/24 18:52:32 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ class CommandHandler
 
         CommandHandler& operator=(const CommandHandler&rhs);
 
-        void execute(Server& Server, Client &client, const std::string input);
+        void execute(Client &client, const std::string input);
         
         typedef void (CommandHandler::*CommandFunc)(Server& server, Client& client, const t_msg& msg);
 

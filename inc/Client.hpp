@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/17 20:13:20 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/24 20:54:57 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,23 @@ class Client
         std::string get_username() const;
         std::string get_password() const;
 
-        void buf_append(const std::string data);
+		void set_nickname(const std::string &nickname);
+		void set_username(const std::string &username);
+		void set_realname(const std::string &realname);
+		void set_password(const std::string &password);
+
+        bool isRegistered() const;
+		void setPassValid(bool valid);
+		
+		/*Tampon d'entree*/
+		void buf_append(const std::string &data);
         bool buf_complete(void) const;
+		std::string getNextCommand();
+
+		/*Tampon de sortie*/
+		void addToSendBuffer(const std::string &msg);
+		std::string &getSendBuffer();
+		void clearSentBytes(size_t n);
 
     private:
 
@@ -45,8 +60,9 @@ class Client
         std::string _username;
         std::string _realname;
         std::string _password;
-        bool _hasPassword;
-        bool _isRegistered;
+        bool _hasPass;
+		bool _hasNick;
+		bool _hasUser;
         
         std::string _input_buf;
         std::string _output_buf;
