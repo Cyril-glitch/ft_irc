@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/19 16:09:50 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/26 16:24:28 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/26 19:15:34 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,8 +228,9 @@ int Server::receiveFromClient(int fd, Client *client)
     /*On extrait et execute chaque lignes*/
     while (client->buf_complete())
     {
+        client->set_nickname("client 1");
         std::string line = client->getNextCommand();
-        std::cout << ICE_BLUE << client->get_nickname() << "📨:\n" << RESET ; 
+        std::cout << ICE_BLUE << client->get_nickname() << " 📨:\n" << RESET ; 
         std::cout << line << "\n";
         client->addToSendBuffer("coucou 👋 !");
         //_cmdHandler.execute(*client , line);
