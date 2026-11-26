@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/24 19:31:15 by gbenaroc          #+#    #+#             */
-/*   Updated: 2026/11/24 20:54:20 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/26 16:06:07 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,12 @@ void Client::buf_append(const std::string &data)
 
 bool Client::buf_complete(void) const
 {
-	return _input_buf.find("\r\n") != std::string::npos;
+	return _input_buf.find('\n') != std::string::npos;
 }
 
 std::string Client::getNextCommand()
 {
-	size_t pos = _input_buf.find("\r\n");
+	size_t pos = _input_buf.find_first_of('\n');
 	std::string cmd = _input_buf.substr(0, pos);
 	_input_buf.erase(0, pos + 2);
 	return cmd;	

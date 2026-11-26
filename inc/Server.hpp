@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/25 17:24:07 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/26 16:15:26 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "Client.hpp"
 #include "Channel.hpp"
 #include "CommandHandler.hpp"
+#include "colors.hpp"
 
 #include <poll.h>
 #include <sys/socket.h>
@@ -29,6 +30,8 @@
 #include <vector>
 #include <map>
 #include <unistd.h>
+#include <iostream>
+
 
 #include <errno.h>
 

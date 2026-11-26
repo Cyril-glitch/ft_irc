@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/19 16:09:50 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/25 17:29:28 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/26 16:24:28 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,13 @@ void Server::addPollFds(int fd)
     _pollFds.push_back(pfd);
 }
 
+
 void Server::init()
 {
     createSocket();
     setSocket();
     bindSocket();
+    listen(_serverFd, SOMAXCONN);
     addPollFds(_serverFd);
 }
 
@@ -164,11 +166,16 @@ void Server::run()
         acceptNewClient();
     
     /*Reception ou envoie des donnees*/
-    for (size_t i = 0; i < _pollFds.size(); i++)
-    {
+    for (size_t i = 1; i < _pollFds.size(); i++)
+    { 
         if (_pollFds[i].revents & POLLIN)
+        {
             if (receiveFromClient(_pollFds[i].fd, _clients[_pollFds[i].fd]) == -1)
+            {
                 disconnectClient(_pollFds[i].fd, _clients[_pollFds[i].fd]), --i;
+                continue;
+            }
+        }
         if (_pollFds[i].revents & POLLOUT)
             if (sendToClient(_pollFds[i].fd, _clients[_pollFds[i].fd]) == -1)
                 disconnectClient(_pollFds[i].fd, _clients[_pollFds[i].fd]), --i;
@@ -198,6 +205,7 @@ void Server::acceptNewClient()
 
     /*creer le pollfd du nouveaux client*/
     addPollFds(clientFd);
+    std::cout << "New client accepted at sock [" <<  clientFd << "] ✅\n";
 }
 
 int Server::receiveFromClient(int fd, Client *client)
@@ -212,7 +220,7 @@ int Server::receiveFromClient(int fd, Client *client)
     ssize_t bytesRead = recv(fd, buf, sizeof(buf) -1, 0);
 
     /*Check les deconnection ou les erreur de reseau*/
-    if (bytesRead <= 0 && (errno != EAGAIN || errno != EWOULDBLOCK)) return -1;
+    if (bytesRead <= 0 && errno != EAGAIN && errno != EWOULDBLOCK) return -1;
 
     /*stock les donnees recu*/
     client->buf_append(buf);
@@ -221,6 +229,9 @@ int Server::receiveFromClient(int fd, Client *client)
     while (client->buf_complete())
     {
         std::string line = client->getNextCommand();
+        std::cout << ICE_BLUE << client->get_nickname() << "📨:\n" << RESET ; 
+        std::cout << line << "\n";
+        client->addToSendBuffer("coucou 👋 !");
         //_cmdHandler.execute(*client , line);
     }
     return 1;
@@ -239,7 +250,7 @@ int Server::sendToClient(int fd,Client *client)
     ssize_t bytesWrite = send(fd, out.c_str(), out.size(), 0);
 
     /*Check les deconnection ou les erreur de reseau*/
-    if (bytesWrite <= 0 && (errno != EAGAIN || errno != EWOULDBLOCK)) return -1 ;
+    if (bytesWrite <= 0 && errno != EAGAIN && errno != EWOULDBLOCK) return -1 ;
 
     /*efface la partie du buffer qui a ete envoye*/
     client->clearSentBytes(bytesWrite);
