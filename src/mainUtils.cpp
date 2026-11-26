@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 20:12:02 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/19 19:08:46 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/25 17:04:05 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void    signalInit(struct sigaction *sa)
 
 void signalHandler(int signum)
 {
-    (void)signum;
+    if (signum == SIGINT || signum == SIGQUIT)
+        g_stop = 1;
 }

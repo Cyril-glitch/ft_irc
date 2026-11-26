@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/18 15:17:46 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/25 16:16:42 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ class Channel
         void addOperator(Client *client);
         void removeOperator(Client *client);
 
+        void removeUser(int fd, Client *client);
+
         /*Getters*/
         std::string getName() const;
         std::string getTopic() const;
@@ -54,6 +56,7 @@ class Channel
 
         bool isInviteOnly() const;
         bool isTopicRestricted() const;
+        bool isEmpty() const;
 
         /*Setters*/
         void setTopic();

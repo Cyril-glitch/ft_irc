@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/24 20:46:01 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/25 17:24:07 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,20 @@ class Server
         void init();
         void run();
 
+        typedef typename std::map<int, Client*>::iterator client_iterator;
+        typedef typename std::vector<struct pollfd>::iterator pollfd_iterator;
+        typedef typename std::map<std::string, Channel*>::iterator channel_iterator;
+ 
         std::string getClientPassword(Client &client) const;
         Client* getClientByFd(int fd);
         Client* getClientByNickName(const std::string &nickname);
-        Channel* getChannel(const std::string& name);
+        //Channel* getChannel(const std::string& name);
 
-        void    creatChannel(const std::string& name, Client* creator);
-        void    removeChannelIfEmpt(const std::string& name);
-        void    disconnectClient(int fd);
+        //void    createChannel(const std::string& name, Client* creator);
+        //void    removeEmptyChan(const std::string& name);
+        //void    disconnectClient(int fd);
 
-        typedef typename std::map<int, Client*>::iterator client_iterator;
-        typedef typename std::map<std::string, Channel*>::iterator channel_iterator;
- 
-    private:
+        private:
 
         int _port;
         int _serverFd;
@@ -65,22 +66,28 @@ class Server
         std::vector<struct pollfd> _pollFds;
         std::map<int, Client*> _clients;
         std::map<std::string, Channel*> _channels;
-        CommandHandler _cmdHandler;
+        //CommandHandler _cmdHandler;
 
         Server(const Server &src);
         Server& operator=(const Server &rhs);
 
         void acceptNewClient();
-        void receiveFromClient(int fd, Client *client);
-        void SendToClient(int fd);
+        int receiveFromClient(int fd, Client *client);
+        int sendToClient(int fd, Client *client);
+        
+        bool isConnectedClient(int fd);
+        void disconnectClient(int fd, Client *client);
 
+        /*
         void closeClientsMap();
         void closeChannelsMap();
         void closeFds();
+        */
 
         void createSocket();
         void setSocket();
         void bindSocket();
+        void addPollFds(int fd);
 
         void setPollEvents();
 };

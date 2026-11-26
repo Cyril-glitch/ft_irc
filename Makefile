@@ -7,7 +7,8 @@ OBJ_DIR = obj
 
 SRC = src/main.cpp \
 	  src/mainUtils.cpp \
-	  src/Server.cpp 
+	  src/Server.cpp \
+	  src/Client.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.cpp=.o)))
 
