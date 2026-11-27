@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/25 16:16:42 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/27 18:12:02 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ class Channel
         Channel &operator=(const Channel &rhs);
 
         /*Get member statut*/
-        bool isMember(int, Client *client) const;
-        bool isOperator(int, Client *client) const;
-        bool isInvited(int, Client *client) const;
+        bool isMember(int fd) const;
+        bool isOperator(int fd) const;
+        bool isInvited(int fd) const;
 
         /*Add clients*/
-        void addMember(Client *client);
-        void removeMember(Client *client);
+        void addMember(int fd, Client *client);
+        void removeMember(int fd);
 
         void addInvited(int fd, Client *client);
-        void removeInvited(int fd, Client *client);
+        void removeInvited(int fd);
 
-        void addOperator(Client *client);
-        void removeOperator(Client *client);
+        void addOperator(int fd, Client *client);
+        void removeOperator(int fd);
 
         void removeUser(int fd, Client *client);
 
@@ -59,7 +59,7 @@ class Channel
         bool isEmpty() const;
 
         /*Setters*/
-        void setTopic();
+        void setTopic(std::string topic);
         void setTopicRestricted(bool state);
         void setKey(const std::string key);
         void setUserLimit(size_t limit);
@@ -67,11 +67,16 @@ class Channel
         /*Displays*/
         void broadcast(const std::string&message, int excludeFd = -1);
 
+        typedef typename std::map<std::string, Channel*>::iterator channel_iterator;
+        typedef typename std::map<int, Client*>::iterator client_iterator;
+
+
     private:
 
         /*Channel info*/
         std::string _name;
         std::string _topic;
+        std::string _count;
 
         /*Users list*/
         std::map<int, Client *> _members;

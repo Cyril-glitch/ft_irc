@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:02:59 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/11/26 16:15:26 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/11/27 15:31:24 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ class Server
         typedef typename std::map<int, Client*>::iterator client_iterator;
         typedef typename std::vector<struct pollfd>::iterator pollfd_iterator;
         typedef typename std::map<std::string, Channel*>::iterator channel_iterator;
+
  
         std::string getClientPassword(Client &client) const;
         Client* getClientByFd(int fd);
